@@ -1,2 +1,7 @@
 fastapi
 uvicorn
+psycopg2-binary
+numpy
+pandas
+bs4
+requests

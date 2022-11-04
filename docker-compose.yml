@@ -9,14 +9,15 @@ services:
     ports:
       - 8000:8000
     depends_on:
-      - db
+      - database
       
-  db:
+  database:
     image: postgres:13-alpine
     volumes:
       - ./db_data/:/var/lib/postgresql/data/
     ports:
-      - '27017:27017'
+      - 5432:5432
     environment:
-      POSTGRES_DB: "db"
-      POSTGRES_HOST_AUTH_METHOD: "trust"
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
