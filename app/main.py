@@ -21,8 +21,16 @@ db = Database()
 def Home(request: Request):
 
     imdb = db.get_movies()
-    
+
     return templates.TemplateResponse('home.html', context={'request': request, 'imdb': imdb})
+
+@app.get('/{title}')
+def movie(request: Request, title: str):
+
+    imdb = db.get_movies()
+    movie = [movie for movie in imdb if movie[1] == title]
+
+    return templates.TemplateResponse('movie.html', context={'request': request, 'movie': movie})
 
 @app.get('/test')
 def test():
