@@ -3,7 +3,9 @@ version: '3.8'
 services:
   web:
     build: .
-    command: uvicorn app.main:app --host 0.0.0.0
+    # command: uvicorn app.main:app --host 0.0.0.0
+    command: bash -c 'while !</dev/tcp/database/5432; do sleep 1; done; uvicorn app.main:app --host 0.0.0.0'
+
     volumes:
       - .:/app
     ports:
@@ -21,3 +23,6 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+
+volumes:
+  db_data:

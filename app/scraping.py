@@ -26,7 +26,7 @@ def execute_values(conn, df, table):
     cursor.close()
 
 
-def insert_db() : 
+def scrap_movies_db() : 
 
     url = 'http://www.imdb.com/chart/top'
     response = requests.get(url)
@@ -45,16 +45,17 @@ def insert_db() :
         movie_title = movie[len(str(index))+1:-7]
         year = re.search('\((.*?)\)', movie_string).group(1)
         place = movie[:len(str(index))-(len(movie))]
-        data = {"place": place,
+        data = {"rank": int(place),
                 "movie_title": movie_title,
-                "rating": ratings[index],
-                "year": year,
+                "rating": float(ratings[index]),
+                "year": int(year),
                 "star_cast": crew[index],
                 }
         list.append(data)
     
     df = pd.DataFrame(list)
+    return df
 
-    conn = psycopg2.connect(database="db", user='postgres', host='postgres:5432', port='27017')
+    # conn = psycopg2.connect(database="db", user='postgres', host='postgres:5432', port='27017')
     
-    execute_values(conn, df, 'IMDB')
+    # execute_values(conn, df, 'IMDB')
