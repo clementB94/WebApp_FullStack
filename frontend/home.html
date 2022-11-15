@@ -8,5 +8,10 @@
 <body>
     <h1>Movies review</h1>
     <h3>Hi, here are some movies you might want to review</h3>
+    {% for item in imdb %}
+        <tr>
+            <td>{{item}}<br></td>
+        </tr>
+    {% endfor %}
 </body>
 </html>
