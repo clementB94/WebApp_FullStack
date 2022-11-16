@@ -13,7 +13,7 @@
     <h3>Hi, here are some movies you might want to review</h3>
     {% for item in imdb %}
         <tr>
-            <td>Place : {{item[0]}}    Title : {{item[1]}}    Grade : {{item[2]}}     Date : {{item[3]}}     Casting : {{item[4]}}<br><br></td>
+            <td>Rank : {{item["rank"]}}    Title : {{item["movie_title"]}}    Grade : {{item["rating"]}}     Date : {{item["year"]}}     Casting : {{item["star_cast"]}}<br><br></td>
         </tr>
     {% endfor %}
 </body>
