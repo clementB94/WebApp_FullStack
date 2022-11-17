@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from . import models, schemas
+from .models import models, schemas
 
 def get_movie(db: Session, id: int):
     return db.query(models.Movie).filter_by(movie_id=id).first()

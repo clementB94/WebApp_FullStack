@@ -7,7 +7,7 @@ import numpy as np
 import psycopg2.extras as extras
 
 
-def execute_values(conn, df, table):
+def execute_values(conn, df, table): # TODO: A supprimer
     
     tuples = [tuple(x) for x in df.to_numpy()]
 
