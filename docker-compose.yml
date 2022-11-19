@@ -26,11 +26,12 @@ services:
 
   frontend:
     build: ./frontend
+    # image: node:lts-alpine
     volumes:
       - './frontend:/app'
       - '/app/node_modules'
     ports:
-      - 8080:5173
+      - 8080:8080
 
 volumes:
   db_data:

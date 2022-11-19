@@ -15,7 +15,7 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="API WebApp")
 
-templates = Jinja2Templates(directory="frontend/")
+templates = Jinja2Templates(directory="frontend_old/")
 
 
 # Routes 
