@@ -1,13 +1,13 @@
 version: '3.8'
 
 services:
-  web:
+  api:
     build: .
     # command: uvicorn app.main:app --host 0.0.0.0
-    command: bash -c 'while !</dev/tcp/database/5432; do sleep 1; done; uvicorn app.main:app --host 0.0.0.0 --reload'
+    command: bash -c 'while !</dev/tcp/database/5432; do sleep 1; done; uvicorn backend.main:app --host 0.0.0.0 --reload'
 
     volumes:
-      - .:/app
+      - .:/backend
     ports:
       - 8000:8000
     depends_on:
@@ -23,6 +23,14 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - './frontend:/app'
+      - '/app/node_modules'
+    ports:
+      - 8080:5173
 
 volumes:
   db_data:
