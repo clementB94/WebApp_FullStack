@@ -6,6 +6,8 @@ Pour lancer
 2. ```docker-compose up```
   
 Front-end (Vue.js) : http://localhost:8080/
-Documentation API : http://localhost:8000/docs
+
+Back-end (FastAPI) : http://localhost:8000 
+  Documentation : http://localhost:8000/docs 
   
 Le dossier db_data a été enlevé du git (et ajouté dans .gitignore). La database se charge en local à partir de rien à la création des conteneurs. A changer ?
