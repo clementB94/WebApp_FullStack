@@ -5,6 +5,6 @@ COPY package*.json ./
 
 RUN npm install
 COPY . .
-RUN npm install axios --save
+RUN npm install --save axios
 
 CMD ["npm", "run", "dev", "--", "--host"]

@@ -8,9 +8,16 @@ import axios from 'axios'
 
 import './assets/main.css'
 
-const app = createApp(App)
 
+
+// axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'http://localhost:8000/';  // the FastAPI backend
+
+
+const app = createApp(App)
 app.use(createPinia())
 app.use(router)
+
+
 
 app.mount('#app')

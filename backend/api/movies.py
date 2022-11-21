@@ -10,6 +10,7 @@ from .. import scraping
 router = APIRouter()
 
 
+
 # ======== GET ========
 
 @router.get("/movies/{title}", response_model=schemas.Movie)
