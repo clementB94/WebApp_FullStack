@@ -13,4 +13,31 @@ class MovieCreate(MovieBase):
 class Movie(MovieBase):
     class Config:
         orm_mode = True
+
+# User
+class UserBase(BaseModel):
+    id:int
+
+class UserCreate(UserBase):
+    pass
+
+class User(UserBase):
+    class Config:
+        orm_mode = True
+
+# Rating
+class RatingBase(BaseModel):
+    user_id : int
+    movie_title: str
+    movie_year: int
+    rating: int
+
+class RatingCreate(RatingBase):
+    pass
+
+class Rating(RatingBase):
+    
+    class Config:
+        orm_mode=True
+
     

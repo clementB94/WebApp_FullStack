@@ -12,8 +12,7 @@ from sqlalchemy.orm import Session
 from . import scraping
 from .api.models import models, schemas
 from .database import SessionLocal, engine, get_db
-from .api import crud, movies 
-
+from .api import crud, movies, users, ratings
 
 
 models.Base.metadata.create_all(bind=engine)
@@ -37,8 +36,9 @@ templates = Jinja2Templates(directory="frontend_old/")
 
 
 # Routes 
-
 app.include_router(movies.router)
+app.include_router(ratings.router)
+app.include_router(users.router)
 # CORS
 app.add_middleware(
     CORSMiddleware,
