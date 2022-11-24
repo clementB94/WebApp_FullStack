@@ -32,11 +32,11 @@ def get_users(db: Session, skip: int = 0, limit: int = 250):
     return db.query(models.User).offset(skip).limit(limit).all()
 
 def create_user_init(db: Session, user=schemas.UserCreate):
-    db_rating = models.User(**user.dict())
-    db.add(db_rating)
+    db_user = models.User(**user.dict())
+    db.add(db_user)
     db.commit()
-    db.refresh(db_rating)
-    return db_rating
+    db.refresh(db_user)
+    return db_user
 
 
 # Ratings
@@ -76,7 +76,7 @@ def remove_rating(db: Session, rating:schemas.Rating):
     db.delete(db_rating)
     db.commit()
     # db.refresh(db_movie)
-    return 
+    return db_rating
 
 
 # Comments
@@ -117,4 +117,4 @@ def remove_comment(db: Session, comment:schemas.Comment):
     db.delete(db_comment)
     db.commit()
     # db.refresh(db_movie)
-    return 
+    return db_comment

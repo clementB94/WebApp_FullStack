@@ -17,18 +17,7 @@ from .api import crud, movies, users, ratings,comments
 
 models.Base.metadata.create_all(bind=engine)
 
-middleware = [
-    Middleware(
-        CORSMiddleware,
-        allow_origins=['*'],
-        allow_credentials=False,
-        # allow_methods=['*'],
-        allow_headers=['*'],
-        # expose_headers=["*"]
-    )
-]
 
-# app = FastAPI(title="API WebApp", middleware=middleware)
 app = FastAPI(title="API WebApp")
 
 templates = Jinja2Templates(directory="frontend_old/")
