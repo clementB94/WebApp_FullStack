@@ -9,7 +9,7 @@ from .. import scraping
 router = APIRouter()
 
 # ======== GET ========
-@router.get("/users/", response_model=list[schemas.User])
+@router.get("/users/", response_model=list[schemas.User], tags=["users"])
 def get_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
@@ -22,7 +22,7 @@ def get_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 
 # ======== POST ========
 
-@router.post("/users/", response_model=schemas.User)
+@router.post("/users/", response_model=schemas.User, tags=["users"])
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     # db_user = crud.get_user_by_id(db, title=user.id)
     # if db_user:

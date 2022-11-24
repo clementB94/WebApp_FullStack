@@ -36,9 +36,9 @@ templates = Jinja2Templates(directory="frontend_old/")
 
 
 # Routes 
+app.include_router(users.router)
 app.include_router(movies.router)
 app.include_router(ratings.router)
-app.include_router(users.router)
 app.include_router(comments.router)
 # CORS
 app.add_middleware(
