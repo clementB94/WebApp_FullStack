@@ -40,4 +40,20 @@ class Rating(RatingBase):
     class Config:
         orm_mode=True
 
+
+# Comments
+class CommentBase(BaseModel):
+    user_id : int
+    movie_title: str
+    movie_year: int
+    comment: str
+
+class CommentCreate(CommentBase):
+    pass
+
+class Comment(CommentBase):
+    
+    class Config:
+        orm_mode=True
+
     

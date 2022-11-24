@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 from . import scraping
 from .api.models import models, schemas
 from .database import SessionLocal, engine, get_db
-from .api import crud, movies, users, ratings
+from .api import crud, movies, users, ratings,comments
 
 
 models.Base.metadata.create_all(bind=engine)
@@ -39,6 +39,7 @@ templates = Jinja2Templates(directory="frontend_old/")
 app.include_router(movies.router)
 app.include_router(ratings.router)
 app.include_router(users.router)
+app.include_router(comments.router)
 # CORS
 app.add_middleware(
     CORSMiddleware,
@@ -50,22 +51,22 @@ app.add_middleware(
 )
 
 # Temporaire pour que le front marche
-@app.get("/")
-def get_movies(request: Request, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    movies = crud.get_movies(db, skip=skip, limit=limit)
+# @app.get("/")
+# def get_movies(request: Request, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+#     movies = crud.get_movies(db, skip=skip, limit=limit)
 
-    return templates.TemplateResponse('home.html', context={'request': request, 'imdb': movies})
+#     return templates.TemplateResponse('home.html', context={'request': request, 'imdb': movies})
 
-@app.get("/{title}")
-def get_movie_by_title(request: Request, title: str, db: Session = Depends(get_db)):
-    movie = crud.get_movie_by_title(db, title=title)
-    if movie is None:
-        raise HTTPException(status_code=404, detail=f"{title} not found")
+# @app.get("/{title}")
+# def get_movie_by_title(request: Request, title: str, db: Session = Depends(get_db)):
+#     movie = crud.get_movie_by_title(db, title=title)
+#     if movie is None:
+#         raise HTTPException(status_code=404, detail=f"{title} not found")
 
     
-    movie = movie.__dict__
-    movie.pop('_sa_instance_state', None)
-    return templates.TemplateResponse('movie.html', context={'request': request, 'movie': movie})
+#     movie = movie.__dict__
+#     movie.pop('_sa_instance_state', None)
+#     return templates.TemplateResponse('movie.html', context={'request': request, 'movie': movie})
 
 
 

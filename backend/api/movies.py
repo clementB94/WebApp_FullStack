@@ -13,7 +13,7 @@ router = APIRouter()
 
 # ======== GET ========
 
-@router.get("/movies/{title}", response_model=schemas.Movie)
+@router.get("/movies/{title}", response_model=schemas.Movie, tags=["movies"])
 def get_movie_by_title(title: str, db: Session = Depends(get_db)):
     db_movie = crud.get_movie_by_title(db, title=title)
     if db_movie is None:
