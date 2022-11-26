@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 from . import scraping
 from .api.models import models, schemas
 from .database import SessionLocal, engine, get_db
-from .api import crud, movies, users, ratings,comments
+from .api import crud, movies, users, ratings,comments, movie_lists
 
 
 models.Base.metadata.create_all(bind=engine)
@@ -29,6 +29,7 @@ app.include_router(users.router)
 app.include_router(movies.router)
 app.include_router(ratings.router)
 app.include_router(comments.router)
+app.include_router(movie_lists.router)
 # CORS
 app.add_middleware(
     CORSMiddleware,

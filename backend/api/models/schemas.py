@@ -1,8 +1,9 @@
+from typing import Union
 from pydantic import BaseModel
 
 class MovieBase(BaseModel):
-    rank:int
-    movie_title:str
+    id:str
+    title:str
     rating:float
     year: int
     star_cast:str #TODO : str -> liste d'acteurs
@@ -15,21 +16,28 @@ class Movie(MovieBase):
         orm_mode = True
 
 # User
-class UserBase(BaseModel):
-    id:int
+
+class UserBase (BaseModel):
+    username: str
+    email: Union[str, None] = None
+    full_name: Union[str, None] = None
+    disabled: Union[bool, None] = None
 
 class UserCreate(UserBase):
-    pass
+    hashed_password: str
 
 class User(UserBase):
+    id:int
     class Config:
         orm_mode = True
+
+class UserInDB(User):
+    hashed_password: str
 
 # Rating
 class RatingBase(BaseModel):
     user_id : int
-    movie_title: str
-    movie_year: int
+    movie_id: str
     rating: int
 
 class RatingCreate(RatingBase):
@@ -44,16 +52,30 @@ class Rating(RatingBase):
 # Comments
 class CommentBase(BaseModel):
     user_id : int
-    movie_title: str
-    movie_year: int
+    movie_id: str
     comment: str
 
 class CommentCreate(CommentBase):
     pass
 
 class Comment(CommentBase):
-    
+    id:int
     class Config:
         orm_mode=True
 
+
+# MovieList 
+
+class MovieListBase(BaseModel):
+    name:str
+    author:int
+    movies: str 
+
+class MovieListCreate(MovieListBase):
+    pass
+
+class MovieList(MovieListBase):
+    id:int
+    class Config:
+        orm_mode = True
     

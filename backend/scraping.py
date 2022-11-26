@@ -4,36 +4,44 @@ import re
 import pandas as pd
 import numpy as np
 
-def scrap_movies_db() : 
+def scrap_movie_imdb(url:str):
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, "html.parser")
+        id = [u for u in url.split("/") if u.startswith("tt")][0]
+        title  = soup.find("h1", {"data-testid":"hero-title-block__title"}).getText()
+        rating = soup.find("div", {"data-testid":"hero-rating-bar__aggregate-rating__score"}).span.getText()
+        year = soup.find("ul", {"data-testid":"hero-title-block__metadata"})
+        year = year.find("li", {"class":"ipc-inline-list__item"}).a.getText()
+        # star_cast = soup.find_all(lambda tag: tag.name == "a" and "Casting principal" in tag.text)
+        star_cast = soup.find_all("li",{"data-testid":"title-pc-principal-credit"})[-1]
+        star_cast = ", ".join([star.getText() for star in star_cast.find_all("li")])
 
-    url = 'http://www.imdb.com/chart/top'
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, "html.parser")
-    movies = soup.select('td.titleColumn')
-    crew = [a.attrs.get('title') for a in soup.select('td.titleColumn a')]
-    ratings = [b.attrs.get('data-value')
-            for b in soup.select('td.posterColumn span[name=ir]')]
-    
-    list = []
-    
-    for index in range(0, len(movies)):
-        
-        movie_string = movies[index].get_text()
-        movie = (' '.join(movie_string.split()).replace('.', ''))
-        movie_title = movie[len(str(index))+1:-7]
-        year = re.search('\((.*?)\)', movie_string).group(1)
-        place = movie[:len(str(index))-(len(movie))]
-        data = {"rank": int(place),
-                "movie_title": movie_title,
-                "rating": float(ratings[index]),
-                "year": int(year),
-                "star_cast": crew[index],
-                }
-        list.append(data)
-    
-    df = pd.DataFrame(list)
-    return df
+        movie = {
+                "id": id,
+                "title":title,
+                "rating":rating,
+                "year":year,
+                "star_cast":star_cast
+        }
+        print(movie)
+        return movie
+                
 
-    # conn = psycopg2.connect(database="db", user='postgres', host='postgres:5432', port='27017')
+
+def scrap_top_movies_imdb(limit=250) : 
+        url = 'http://www.imdb.com/chart/top'
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, "html.parser")
+        # movies = soup.find_all("td.titleColumn a")
+        scraped_movies = []
+        # movies = soup.select('td.titleColumn')
+        for a in soup.select('td.titleColumn a'):
+                if limit:
+                        limit-=1
+                        movie_url = "https://www.imdb.com"+a.attrs.get('href')
+                        try:
+                                scraped_movies.append(scrap_movie_imdb(movie_url))
+                        except:
+                                print("Scraping error :",movie_url)
+        return scraped_movies
     
-    # execute_values(conn, df, 'IMDB')

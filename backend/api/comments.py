@@ -19,22 +19,22 @@ def get_comment_by_user(user_id: int, db: Session = Depends(get_db)):
     return comments
 
 @router.get("/comments/movie", response_model=list[schemas.Comment], tags=["comments","movies"])
-def get_comment_by_movie(movie_title: str, movie_year: int, db: Session = Depends(get_db)):
-    comments = crud.get_comments_by_movie(db, movie_title, movie_year)
+def get_comment_by_movie(movie_id: str, db: Session = Depends(get_db)):
+    comments = crud.get_comments_by_movie(db, movie_id)
     return comments
 
 @router.post("/comments/", response_model=schemas.Comment, tags=["comments"])
-def add_comment(comment: schemas.Comment, db: Session = Depends(get_db)) :
-    db_comment = crud.get_comment(db, comment.movie_title, comment.movie_year, comment.user_id)
-    if db_comment:
-        return crud.update_comment(db=db, comment=comment)
+def add_comment(comment: schemas.CommentCreate, db: Session = Depends(get_db)) :
+    # db_comment = crud.get_comment(db, comment.id)
+    # if db_comment:
+    #     return crud.update_comment(db=db, comment=comment)
     return crud.create_comment(db=db, comment=comment)
 
 # ======== DELETE ========
 
 @router.delete("/comments/", response_model=schemas.Comment, tags=["comments"])
 def delete_comment(comment: schemas.Comment, db: Session = Depends(get_db)):
-    db_comment = crud.get_comment(db, comment.movie_title, comment.movie_year, comment.user_id)
+    db_comment = crud.get_comment(db, comment.movie_id, comment.user_id)
     if not db_comment:
         raise HTTPException(status_code=400, detail=f"Comment not found in base.")
     return crud.remove_rating(db=db, comment=comment)
