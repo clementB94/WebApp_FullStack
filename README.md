@@ -17,7 +17,9 @@ Communication avec l'API : axios
 ## Back-end : http://localhost:8000/docs
 ### API 
 Réalisé avec FastAPI (https://fastapi.tiangolo.com/)
+
 La documentation est accessible ici : http://localhost:8000/docs 
+
 API : http://localhost:8000/
 
 Une partie scraping est disponible au sein de l'API que l'on peut utiliser grace aux requetes :
