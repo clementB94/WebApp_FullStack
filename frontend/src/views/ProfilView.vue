@@ -44,19 +44,31 @@ watchEffect(async () => {
     <h2>Profil de l'utilisateur : {{props.id}}</h2>
     <div v-if="user">
         <p> User : {{user.username}} </p>
-        <p>Evaluations :</p>
-        <tr>
-            <div v-for="rating in ratings">
-                Film : <a :href="'/movie/'+rating.movie_id">{{rating.movie_id}}</a> Note : {{rating.rating}}
-            </div>
-        </tr>
-        <p>Commentaires :</p>
-        <tr>
-          <Comment v-for="comment in comments" :comment=comment :with_movie=true></Comment>
-      </tr>
+        <div class="category">
+            <h3>Evaluations :</h3>
+            <tr>
+                <div v-for="rating in ratings">
+                    Film : <a :href="'/movie/'+rating.movie_id">{{rating.movie_id}}</a> Note : {{rating.rating}}
+                </div>
+            </tr>
+        </div>
+        <div class="category">
+            <h3>Commentaires :</h3>
+            <tr>
+                <Comment v-for="comment in comments" :comment=comment :with_movie=true></Comment>
+            </tr>
+        </div>
+        
+        
     </div>
     <div v-else>...</div>
 
   
   </main>
 </template>
+
+<style scoped>
+.category {
+    padding-top: 20px;
+}
+</style>

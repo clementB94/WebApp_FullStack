@@ -21,15 +21,25 @@ console.log(movies)
 
 <template>
   <main>
+    
+
+    
     <h2>Tous les films</h2>
     <p>Recherchez l'id d'un film : </p>
     <input v-model="text">
     <!-- <button @click="click">TEST</button> -->
-    <a :href="'/movie/'+text" tag="button">Recherche</a>
-    
-    <tr>
-        <MovieCard v-for="movie in movies" :movie=movie></MovieCard>
-    </tr>
-    
+    <a id="" :href="'/movie/'+text" tag="button">Recherche</a>
+    <div class="movie_list">
+      <MovieCard v-for="movie in movies" :movie=movie></MovieCard>
+    </div>
   </main>
 </template>
+
+<style>
+td, th {
+  text-align:left
+}
+.movie_list {
+  padding-top: 40px;
+}
+</style>

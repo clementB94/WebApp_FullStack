@@ -82,9 +82,9 @@ async function add_comment() {
       <textarea v-model="new_comment" placeholder="Entrez un commentaire"></textarea>
       <button @click="add_comment">Ajouter commentaire</button>
       <!-- Comments -->
-      <tr v-if="comments">
+      <div v-if="comments">
           <Comment v-for="comment in comments" :comment=comment :with_author=true></Comment>
-      </tr>
+      </div>
     </div>
   
   </main>

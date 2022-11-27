@@ -23,13 +23,6 @@ def get_user(username: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail=f"User {username} not found")
     return db_user
 
-# @router.get("/users/name/", response_model=schemas.User)
-# def get_user_by_name(name: str, db: Session = Depends(get_db)):
-#     db_user = crud.get_user_by_username(db, name)
-#     if db_user is None:
-#         raise HTTPException(status_code=404, detail=f"User {id} not found")
-#     return db_user
-
 @router.get("/users/token/test")
 def test_user_auth(id:int, db: Session = Depends(get_db), current_user: schemas.User = Depends(get_current_user_from_token)):
     if id == current_user.username:

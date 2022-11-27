@@ -31,4 +31,8 @@ nav a {
   padding: 0 10px;
   border-left: 1px solid var(--color-border);
 }
+
+.wrapper {
+  padding-bottom: 30px;
+}
 </style>
