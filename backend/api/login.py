@@ -4,12 +4,12 @@ from sqlalchemy.orm import Session
 from datetime import timedelta
 from fastapi import status,HTTPException
 
-from db.session import get_db
-from core.hashing import Hasher
-from schemas.tokens import Token
-from db.repository.login import get_user
-from core.security import create_access_token
-from core.config import settings
+from backend.database import get_db
+from backend.core.hashing import Hasher
+from backend.api.models.schemas import Token
+from backend.api.users import get_user
+from backend.core.security import create_access_token
+from backend.core.config import settings
 
 
 router = APIRouter()
