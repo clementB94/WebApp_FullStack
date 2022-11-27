@@ -12,7 +12,7 @@ import HelloWorld from './components/HelloWorld.vue'
       <nav>
         <RouterLink to="/">Accueil</RouterLink>
         <RouterLink to="/list">250 films les mieux notés</RouterLink>
-        <!-- <RouterLink to="/profil/">Profil</RouterLink> -->
+        <RouterLink to="/scraping">Scraper un film</RouterLink>
       
       </nav>
     </div>

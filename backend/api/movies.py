@@ -57,8 +57,10 @@ def scrape_top_movies(limit: int, db: Session = Depends(get_db)):
     return movies
 
 @router.post("/movies/scrape/", tags=["movies"])
-def scrape_movie(url: str, db: Session = Depends(get_db)):
-    scraped_movie = scraping.scrap_movie_imdb(url)
+def scrape_movie(url_imdb: str, db: Session = Depends(get_db)):
+    print(url_imdb)
+    scraped_movie = scraping.scrap_movie_imdb(url_imdb)
+    print(scraped_movie)
     scraped_movie = schemas.MovieCreate(**scraped_movie)
     return crud.create_movie(db,scraped_movie)
 

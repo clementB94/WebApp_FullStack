@@ -33,7 +33,12 @@ const router = createRouter({
       name: 'profil',
       props: true,
       component: () => import('../views/ProfilView.vue')
-    }
+    },
+    {
+      path: '/scraping',
+      name: 'scraping',
+      component: () => import('../views/ScrapingView.vue')
+    },
   ]
 })
 
