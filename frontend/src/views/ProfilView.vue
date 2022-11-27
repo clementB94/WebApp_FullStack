@@ -41,7 +41,7 @@ watchEffect(async () => {
 
 <template>
   <main>
-    <p>Profil de l'utilisateur : {{props.id}}</p>
+    <h2>Profil de l'utilisateur : {{props.id}}</h2>
     <div v-if="user">
         <p> User : {{user.username}} </p>
         <p>Evaluations :</p>

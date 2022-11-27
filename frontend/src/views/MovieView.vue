@@ -44,21 +44,21 @@ watchEffect(async () => {
     }).then(v => v.data)
 })
 
-function add_rating() {
-  axios.post("/ratings/", {
+async function add_rating() {
+  rating.value = await axios.post("/ratings/", {
     movie_id:movie.value.id,
     username:user,
     rating:parseInt(new_rating.value)
   }).then(v => v.data)
-  rating.value.rating = new_rating.value
 }
 
-function add_comment() {
-  axios.post("/comments/", {
+async function add_comment() {
+  console.log(comments.value)
+  comments.value.push(await axios.post("/comments/", {
     movie_id:movie.value.id,
     username:user,
     comment:new_comment.value
-  }).then(v => v.data)
+  }).then(v => v.data))
 }
 
 
@@ -66,7 +66,7 @@ function add_comment() {
 
 <template>
   <main>
-    <p>Information sur un film : {{props.id}}</p>
+    <h2>Information sur un film : {{props.id}}</h2>
     <MovieCard v-if="movie" :movie=movie></MovieCard>
     <p v-else>...</p>
     <!-- Rating -->
@@ -82,8 +82,8 @@ function add_comment() {
       <textarea v-model="new_comment" placeholder="Entrez un commentaire"></textarea>
       <button @click="add_comment">Ajouter commentaire</button>
       <!-- Comments -->
-      <tr>
-          <Comment v-for="comment in comments" :comment=comment></Comment>
+      <tr v-if="comments">
+          <Comment v-for="comment in comments" :comment=comment :with_author=true></Comment>
       </tr>
     </div>
   
