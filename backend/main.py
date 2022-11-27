@@ -30,7 +30,7 @@ app.include_router(login.router)
 app.include_router(movies.router)
 app.include_router(ratings.router)
 app.include_router(comments.router)
-app.include_router(movie_lists.router)
+# app.include_router(movie_lists.router)
 # CORS
 app.add_middleware(
     CORSMiddleware,

@@ -30,7 +30,6 @@ class UserInDB(UserBase):
     hashed_password: str
 
 class User(UserInDB):
-    id:int
     class Config:
         orm_mode = True
 
@@ -45,7 +44,7 @@ class Token(BaseModel):
         
 # Rating
 class RatingBase(BaseModel):
-    user_id : int
+    username : str
     movie_id: str
     rating: int
 
@@ -60,7 +59,7 @@ class Rating(RatingBase):
 
 # Comments
 class CommentBase(BaseModel):
-    user_id : int
+    username : str
     movie_id: str
     comment: str
 
@@ -75,16 +74,16 @@ class Comment(CommentBase):
 
 # MovieList 
 
-class MovieListBase(BaseModel):
-    name:str
-    author:int
-    movies: str 
+# class MovieListBase(BaseModel):
+#     name:str
+#     author:str
+#     movies: str 
 
-class MovieListCreate(MovieListBase):
-    pass
+# class MovieListCreate(MovieListBase):
+#     pass
 
-class MovieList(MovieListBase):
-    id:int
-    class Config:
-        orm_mode = True
+# class MovieList(MovieListBase):
+#     id:int
+#     class Config:
+#         orm_mode = True
     

@@ -12,6 +12,7 @@ const rating = ref(null)
 const comments = ref(null)
 const new_comment = ref(null)
 console.log(props)
+const user = "admin" // TEMPORAIRE
 
 // Get movie info
 watchEffect(async () => {
@@ -20,39 +21,42 @@ watchEffect(async () => {
     // movie.value = await get_movie(props.id)
 })
 
-const user = 3 // TEMPORAIRE
+
 
 // Get movie rating
 watchEffect(async () => {
-    rating.value = await axios.get("/ratings/rating", {
+    rating.value = await axios.get("/ratings/rating/", {
       params: {
-        user_id: user,
-        movie_id: movie.value.id
+        username: user,
+        movie_id: props.id
       }
     }).then(v => v.data)
+    console.log("rating:")
+    console.log(rating)
 })
 
 // Get movie comments
 watchEffect(async () => {
     comments.value = await axios.get("/comments/movie/", {
       params: {
-        movie_id: movie.value.id
+        movie_id: props.id
       }
     }).then(v => v.data)
 })
 
 function add_rating() {
-  rating.value = axios.post("/ratings/", {
+  axios.post("/ratings/", {
     movie_id:movie.value.id,
-    user_id:user,
-    rating:new_rating.value
+    username:user,
+    rating:parseInt(new_rating.value)
   }).then(v => v.data)
+  rating.value.rating = new_rating.value
 }
 
 function add_comment() {
   axios.post("/comments/", {
     movie_id:movie.value.id,
-    user_id:user,
+    username:user,
     comment:new_comment.value
   }).then(v => v.data)
 }
@@ -67,7 +71,8 @@ function add_comment() {
     <p v-else>...</p>
     <!-- Rating -->
     <div>
-      <p>Votre note : {{ rating.rating }}</p>
+      <p v-if="rating">Votre note : {{ rating.rating }}</p>
+      <p v-else>Votre note : Pas d'évaluation</p>
       <input v-model="new_rating" placeholder="Entrez une note pour ce film" type="numeric">
       <button @click="add_rating">Ajouter rating</button>
       <!-- Movie ratings -->

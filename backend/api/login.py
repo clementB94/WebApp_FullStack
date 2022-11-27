@@ -17,7 +17,7 @@ from jose import JWTError, jwt
 router = APIRouter()
 
 def authenticate_user(username: str, password: str,db: Session):
-    user = crud.get_user_by_username(username=username,db=db)
+    user = crud.get_user(username=username,db=db)
     print(user)
     if not user:
         return False
@@ -36,7 +36,7 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(),db: 
         )
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"user_id": user.id}, expires_delta=access_token_expires
+        data={"username": user.username}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
@@ -57,7 +57,7 @@ def get_current_user_from_token(token: str = Depends(oauth2_scheme),db: Session=
             raise credentials_exception
     except JWTError:
         raise credentials_exception
-    user = crud.get_user(id=user_id,db=db)
+    user = crud.get_user(username=user.username,db=db)
     if user is None:
         raise credentials_exception
     return user

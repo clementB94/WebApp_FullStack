@@ -14,6 +14,18 @@ router = APIRouter()
 
 # ======== GET ========
 
+@router.get("/movies/", response_model=list[schemas.Movie], tags=["movies"])
+def get_movies(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    movies = crud.get_movies(db, skip=skip, limit=limit)
+    return movies
+
+@router.get("/movies/{id}", response_model=schemas.Movie, tags=["movies"])
+def get_movie(id: str, db: Session = Depends(get_db)):
+    db_movie = crud.get_movie(db, id)
+    if db_movie is None:
+        raise HTTPException(status_code=404, detail=f"{id} not found")
+    return db_movie
+
 @router.get("/movies/title/", response_model=schemas.Movie, tags=["movies"])
 def get_movie_by_title(title: str, db: Session = Depends(get_db)):
     db_movie = crud.get_movie_by_title(db, title=title)
@@ -21,17 +33,7 @@ def get_movie_by_title(title: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail=f"{title} not found")
     return db_movie
 
-@router.get("/movies/{id}", response_model=schemas.Movie, tags=["movies"])
-def get_movie_by_id(id: str, db: Session = Depends(get_db)):
-    db_movie = crud.get_movie(db, id)
-    if db_movie is None:
-        raise HTTPException(status_code=404, detail=f"{id} not found")
-    return db_movie
 
-@router.get("/movies/", response_model=list[schemas.Movie], tags=["movies"])
-def get_movies(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    movies = crud.get_movies(db, skip=skip, limit=limit)
-    return movies
 
 # ======== POST ========
 

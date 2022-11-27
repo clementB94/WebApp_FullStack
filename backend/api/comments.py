@@ -19,8 +19,8 @@ def get_comments(id:int, db: Session = Depends(get_db)):
     return comments
 
 @router.get("/comments/user/", response_model=list[schemas.Comment], tags=["comments","users"])
-def get_comment_by_user(user_id: int, db: Session = Depends(get_db)):
-    comments = crud.get_comments_by_user(db, user_id)
+def get_comment_by_user(username: str, db: Session = Depends(get_db)):
+    comments = crud.get_comments_by_user(db, username)
     return comments
 
 @router.get("/comments/movie/", response_model=list[schemas.Comment], tags=["comments","movies"])
@@ -39,7 +39,7 @@ def add_comment(comment: schemas.CommentCreate, db: Session = Depends(get_db)) :
 
 @router.delete("/comments/", response_model=schemas.Comment, tags=["comments"])
 def delete_comment(comment: schemas.Comment, db: Session = Depends(get_db)):
-    db_comment = crud.get_comment(db, comment.movie_id, comment.user_id)
+    db_comment = crud.get_comment(db, comment.movie_id, comment.username)
     if not db_comment:
         raise HTTPException(status_code=400, detail=f"Comment not found in base.")
     return crud.remove_rating(db=db, comment=comment)

@@ -9,7 +9,7 @@ defineProps({
 <template>
     <div>
         Id : {{movie.id}}    
-        Titre : {{movie.title}}    
+        Titre : <a :href="'/movie/'+movie.id">{{movie.title}}</a>
         Note IMDB : {{movie.rating}}     
         Date : {{movie.year}}     
         Casting : {{movie.star_cast}}
