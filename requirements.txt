@@ -14,3 +14,5 @@ python-jose
 
 #for accessing form data       
 python-multipart
+
+passlib

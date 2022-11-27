@@ -29,10 +29,25 @@ def remove_movie(db: Session, id: int):
     return db_movie
 
 # User
+
+def get_user(db: Session, id: int):
+    return db.get(models.User, id)
+
+
+def get_user_by_username(db: Session, username: str):
+    return db.query(models.User).filter_by(username=username).first()
+
 def get_users(db: Session, skip: int = 0, limit: int = 250):
     return db.query(models.User).offset(skip).limit(limit).all()
 
-def create_user_init(db: Session, user=schemas.UserCreate):
+# def create_user_init(db: Session, user=schemas.UserCreate):
+    # db_user = models.User(**user.dict())
+    # db.add(db_user)
+    # db.commit()
+    # db.refresh(db_user)
+    # return db_user
+
+def create_user(db: Session, user=schemas.UserInDB):
     db_user = models.User(**user.dict())
     db.add(db_user)
     db.commit()

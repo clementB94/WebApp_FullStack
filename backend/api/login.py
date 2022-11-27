@@ -1,21 +1,23 @@
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from fastapi import Depends,APIRouter
 from sqlalchemy.orm import Session
 from datetime import timedelta
 from fastapi import status,HTTPException
+from backend.api import crud
 
 from backend.database import get_db
-from backend.core.hashing import Hasher
+from backend.api.core.hashing import Hasher
 from backend.api.models.schemas import Token
-from backend.api.users import get_user
-from backend.core.security import create_access_token
-from backend.core.config import settings
+# from backend.api.users import get_user
+from backend.api.core.security import create_access_token
+from backend.api.core.config import settings
 
+from jose import JWTError, jwt
 
 router = APIRouter()
 
 def authenticate_user(username: str, password: str,db: Session):
-    user = get_user(username=username,db=db)
+    user = crud.get_user_by_username(username=username,db=db)
     print(user)
     if not user:
         return False
@@ -24,7 +26,7 @@ def authenticate_user(username: str, password: str,db: Session):
     return user
 
 
-@router.post("/token", response_model=Token)
+@router.post("/login/token", response_model=Token, tags=["auth", "users"])
 def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(),db: Session= Depends(get_db)):
     user = authenticate_user(form_data.username, form_data.password,db)
     if not user:
@@ -34,7 +36,29 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(),db: 
         )
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": user.email}, expires_delta=access_token_expires
+        data={"user_id": user.id}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
+
+
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login/token")
+
+def get_current_user_from_token(token: str = Depends(oauth2_scheme),db: Session=Depends(get_db)): 
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+    )
+    try:
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        user_id: str = payload.get("user_id")
+
+        if user_id is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+    user = crud.get_user(id=user_id,db=db)
+    if user is None:
+        raise credentials_exception
+    return user
 

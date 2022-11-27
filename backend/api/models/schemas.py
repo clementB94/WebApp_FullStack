@@ -24,15 +24,17 @@ class UserBase (BaseModel):
     disabled: Union[bool, None] = None
 
 class UserCreate(UserBase):
+    password: str
+
+class UserInDB(UserBase):
     hashed_password: str
 
-class User(UserBase):
+class User(UserInDB):
     id:int
     class Config:
         orm_mode = True
 
-class UserInDB(User):
-    hashed_password: str
+
 
 #token
 
