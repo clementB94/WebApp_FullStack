@@ -34,6 +34,13 @@ class User(UserBase):
 class UserInDB(User):
     hashed_password: str
 
+#token
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+        
 # Rating
 class RatingBase(BaseModel):
     user_id : int
