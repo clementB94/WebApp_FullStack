@@ -12,6 +12,6 @@ class Settings:
     # SECRET_KEY :str = os.getenv("SECRET_KEY")   
     SECRET_KEY :str = "secretkey"   #Temporaire 
     ALGORITHM = "HS256"                       
-    ACCESS_TOKEN_EXPIRE_MINUTES = 30  #in mins 
+    ACCESS_TOKEN_EXPIRE_MINUTES = 30  #minutes
 
 settings = Settings()

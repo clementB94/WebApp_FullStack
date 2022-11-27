@@ -10,8 +10,8 @@ import HelloWorld from './components/HelloWorld.vue'
     <div class="wrapper">
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/list">250 films les plus vus</RouterLink>
+        <RouterLink to="/">Accueil</RouterLink>
+        <RouterLink to="/list">250 films les mieux notés</RouterLink>
       
       </nav>
     </div>

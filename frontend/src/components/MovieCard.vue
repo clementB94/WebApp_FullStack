@@ -8,9 +8,9 @@ defineProps({
 
 <template>
     <div>
-        Rank : {{movie.rank}}    
-        Title : {{movie.movie_title}}    
-        Grade : {{movie.rating}}     
+        Id : {{movie.id}}    
+        Titre : {{movie.title}}    
+        Note IMDB : {{movie.rating}}     
         Date : {{movie.year}}     
         Casting : {{movie.star_cast}}
     </div>

@@ -61,7 +61,6 @@ def get_ratings(db: Session, skip: int = 0, limit: int = 250):
     return db.query(models.Rating).offset(skip).limit(limit).all()
 
 def get_rating(db: Session, movie_id: str, user_id: int):
-    print("wah")
     return db.get(models.Rating, (user_id,movie_id))
     
 def get_ratings_by_user(db: Session, user_id: int):
@@ -102,15 +101,15 @@ def remove_rating(db: Session, rating:schemas.Rating):
 def get_comments(db: Session, skip: int = 0, limit: int = 250):
     return db.query(models.Comment).offset(skip).limit(limit).all()
 
-def get_comment(db: Session, movie_id:str, user_id: int):
-    return db.get(models.Comment, (user_id, movie_id))
+def get_comment(db: Session, id):
+    return db.get(models.Comment, id)
 
 def get_comments_by_user(db: Session, user_id: int):
     print(type(user_id), user_id)
     return db.query(models.Comment).filter(models.Comment.user_id==user_id).all()
 
 def get_comments_by_movie(db: Session, movie_id: str):
-    return db.query(models.Comment).filter(models.Comment.movie_id==movie_id).all()
+    return db.query(models.Comment).filter_by(movie_id=movie_id).all()
 
 
 def create_comment(db: Session, comment: schemas.CommentCreate):
@@ -121,7 +120,7 @@ def create_comment(db: Session, comment: schemas.CommentCreate):
     return db_comment
 
 def update_comment(db: Session, comment:schemas.Comment):
-    db_comment = db.get(models.Comment, (comment.user_id,comment.movie_id))
+    db_comment = db.get(models.Comment, comment.id)
     # db.merge(db_comment)
     # db_comment.comment = comment.comment
     setattr(db_comment, 'comment', comment.comment)
@@ -130,7 +129,7 @@ def update_comment(db: Session, comment:schemas.Comment):
     return db_comment
 
 def remove_comment(db: Session, comment:schemas.Comment):
-    db_comment = db.get(models.Comment, (comment.user_id, comment.movie_id))
+    db_comment = db.get(models.Comment, comment.id)
     db.delete(db_comment)
     db.commit()
     # db.refresh(db_movie)

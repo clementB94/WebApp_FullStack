@@ -13,12 +13,17 @@ def get_comments(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))
     comments = crud.get_comments(db, skip=skip, limit=limit)
     return comments
 
-@router.get("/comments/user", response_model=list[schemas.Comment], tags=["comments","users"])
+@router.get("/comments/{id}", response_model=list[schemas.Comment], tags=["comments"])
+def get_comments(id:int, db: Session = Depends(get_db)):
+    comments = crud.get_comment(db, id)
+    return comments
+
+@router.get("/comments/user/", response_model=list[schemas.Comment], tags=["comments","users"])
 def get_comment_by_user(user_id: int, db: Session = Depends(get_db)):
     comments = crud.get_comments_by_user(db, user_id)
     return comments
 
-@router.get("/comments/movie", response_model=list[schemas.Comment], tags=["comments","movies"])
+@router.get("/comments/movie/", response_model=list[schemas.Comment], tags=["comments","movies"])
 def get_comment_by_movie(movie_id: str, db: Session = Depends(get_db)):
     comments = crud.get_comments_by_movie(db, movie_id)
     return comments
