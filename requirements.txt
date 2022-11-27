@@ -7,3 +7,10 @@ bs4
 requests
 sqlalchemy
 jinja2
+
+
+#for creating jwt tokens
+python-jose
+
+#for accessing form data       
+python-multipart
