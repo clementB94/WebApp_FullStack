@@ -5,7 +5,11 @@
 Application d'avis sur des films permettant de communiquer avec une API via une interface Vue.js. Cet API permet de scraper des films directement sur [IMDb](https://www.imdb.com/) et de les enregistrer dans une base de donnée. Les utilisateurs peuvent ensuite noter les films ou ajouter des commentaires. 
 
 
-Pour lancer 
+
+
+## Pour lancer 
+
+Pour faciliter l'installation il est possible d'utiliser une base par défaut avec des utilisateurs et des commentaires déjà présents (cf. "Base de donnée").
 
 1. ```docker-compose build``` (```docker-compose build --no-cache``` si besoin)
 2. ```docker-compose up```
@@ -26,6 +30,8 @@ Pages disponibles :
 
 Le front-end ne fonctionne pour le moment qu'avec l'utilisateur **admin**. En effet, l'authentification d'un utilisateur ne peut peut pas encore se faire à partir du front-end mais est disponible via l'API : [Tester via la requete ``/users/token/test``](http://localhost:8000/docs#/default/test_user_auth_users_token_test_get) après que vous vous soyez identifié avec un utilisateur existant dans la base. (Authorize sur la documentation fast api). Cependant, les autres api sont utilisables sans authentification.
 
+**Le mot de passe de l'utilisateur "admin" est "azerty".**
+
 ## Back-end : http://localhost:8000/docs
 ### API 
 Réalisé avec FastAPI (https://fastapi.tiangolo.com/) et SQLAlchemy (https://www.sqlalchemy.org/).
@@ -45,7 +51,7 @@ Une partie scraping est disponible au sein de l'API que l'on peut utiliser grace
 ### Base de donnée
 Fonctionne avec PostgreSQL
   
-Une base de donnée par défaut a été ajouté au git dans db_data. Il est tout à fait possible de supprimer le dossier afin d'en recréer une vide automatiquement à la construction des conteneurs Docker. **Cela necessite de recréer un utilisateur "admin" à la main avant de pouvoir utiliser le front-end.**
+Une base de donnée par défaut a été ajouté au git dans db_data.zip qu'il suffit d'extraire. Il est tout à fait possible de supprimer le dossier db_data ainsi créé afin d'en recréer une vide automatiquement à la construction des conteneurs Docker. **Cela necessite de recréer un utilisateur "admin" à la main avant de pouvoir utiliser le front-end.**
 
 -----
 
