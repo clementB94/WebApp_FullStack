@@ -35,8 +35,8 @@ La documentation est accessible ici : http://localhost:8000/docs
 API : http://localhost:8000/
 
 Une partie scraping est disponible au sein de l'API que l'on peut utiliser grace aux requetes :
-- ``/movies/scrape/`` permettant de scraper un film avec son url IMDb
-- ``/movies/most_rated/`` qui permet de scraper jusqu'à 250 films qui sont les mieux notés sur IMDb.
+- ``/movies/scrape/`` permettant de scraper un film avec son url IMDb. ex : https://www.imdb.com/title/tt0068646/
+- ``/movies/most_rated/`` qui permet de scraper automatiquement jusqu'à 250 films qui sont les mieux notés sur IMDb.
 
 [Documentation scraping](http://localhost:8000/docs#/movies/scrape_top_movies_movies_most_rated_post)
 
@@ -45,7 +45,7 @@ Une partie scraping est disponible au sein de l'API que l'on peut utiliser grace
 ### Base de donnée
 Fonctionne avec PostgreSQL
   
-Le dossier db_data a été enlevé du git. La database se charge en local à partir de rien à la création des conteneurs. **Cela necessite de recréer un utilisateur "admin" à la main avant de pouvoir utiliser le front-end.**
+Une base de donnée par défaut a été ajouté au git dans db_data. Il est tout à fait possible de supprimer le dossier afin d'en recréer une vide automatiquement à la construction des conteneurs Docker. **Cela necessite de recréer un utilisateur "admin" à la main avant de pouvoir utiliser le front-end.**
 
 -----
 

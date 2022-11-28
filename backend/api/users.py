@@ -24,8 +24,8 @@ def get_user(username: str, db: Session = Depends(get_db)):
     return db_user
 
 @router.get("/users/token/test")
-def test_user_auth(id:int, db: Session = Depends(get_db), current_user: schemas.User = Depends(get_current_user_from_token)):
-    if id == current_user.username:
+def test_user_auth(username:str, current_user: schemas.User = Depends(get_current_user_from_token)):
+    if username == current_user.username:
         return {"msg":"Auth réussie"}
     raise HTTPException(status_code=401,
                             detail=f"Wrong user")
